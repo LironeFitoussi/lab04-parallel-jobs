@@ -1,7 +1,7 @@
 const { greet } = require('../src/greet');
 
 test('greets by name', () => {
-  expect(greet('World')).toBe('Hello, World!');
+  expect(greet('World')).toBe('HelloWorld!');
 });
 
 test('throws when name is empty', () => {

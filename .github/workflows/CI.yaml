@@ -1,6 +1,15 @@
 name: CI
 on: [push, pull_request]
 jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Download Dependencies
+              run: npm ci
+            - name: Run linter
+              run: npm run lint
     test:
         runs-on: ubuntu-latest
         steps:
@@ -10,13 +19,12 @@ jobs:
               run: npm ci
             - name: Run tests
               run: npm test
-    lint:
+
+    summary:
         runs-on: ubuntu-latest
-        needs: test
+        needs: [lint, test]
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-            - name: Download Dependencies
-              run: npm ci
-            - name: Run linter
-              run: npm run lint
+            - name: print summary
+              run: echo "Lint and Test jobs completed successfully!"
+            - name: print time
+              run: echo "Job completed at $(date)"
